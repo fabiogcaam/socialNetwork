@@ -10,3 +10,7 @@ function addPost(req, res, next) {
         .then(() => res.status(201))
         .catch(err => next(err))
 }
+
+module.exports = {
+    addPost
+}

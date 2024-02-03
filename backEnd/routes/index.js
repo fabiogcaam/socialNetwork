@@ -12,4 +12,7 @@ module.exports = app => {
     const userRoutes = require("./user.routes")
     app.use("/api/user", userRoutes)
 
+    const postRoutes = require("./post.routes")
+    app.use("api/post", postRoutes)
+
 }
