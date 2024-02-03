@@ -1,14 +1,17 @@
-import { Container, Row } from "react-bootstrap"
+import { useContext } from "react"
+import { Container, Row, Col } from "react-bootstrap"
+import { AuthContext } from "../../context/auth.context"
 
 const Profile = () => {
+
+    const { loggedUser } = useContext(AuthContext)
 
     return (
         <Container>
             <Row>
                 <Col>
-                    <figure>
-                        <img src="" alt="" />
-                    </figure>
+                    <img src={loggedUser.avatar} alt={loggedUser.username} />
+                    <h2>{loggedUser.email}</h2>
                 </Col>
             </Row>
         </Container>

@@ -12,7 +12,7 @@ const NavBar = () => {
 
     const { loggedUser, logout } = useContext(AuthContext)
 
-    const closeSession = () => {
+    function closeSession() {
         logout()
         navigate('/')
     }
@@ -42,7 +42,7 @@ const NavBar = () => {
                             loggedUser ?
                                 <>
                                     <Link className='navButtons mx-3' to={'/profile'}> My Profile</Link>
-                                    <Link className='navButtons mx-3' onClick={closeSession}>Log Out</Link>
+                                    <Link className='navButtons mx-3' to={'/'} onClick={closeSession}>Log Out</Link>
                                 </>
                                 :
                                 <>

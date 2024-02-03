@@ -1,10 +1,9 @@
-import { createContext, useEffect } from 'react'
-import { useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import authService from './../services/auth.services'
 
 const AuthContext = createContext()
 
-const AuthProviderWrapper = (props) => {
+function AuthProviderWrapper(props) {
 
     const [loggedUser, setLoggedUser] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
@@ -13,7 +12,7 @@ const AuthProviderWrapper = (props) => {
         authUser()
     }, [])
 
-    const authUser = () => {
+    function authUser() {
 
         const token = localStorage.getItem('authToken')
 
@@ -21,15 +20,15 @@ const AuthProviderWrapper = (props) => {
             authService
                 .verify(token)
                 .then(({ data }) => {
+                    console.log(data)
                     setLoggedUser(data.loggedUser)
                     setIsLoading(false)
                 })
                 .catch(err => console.log(err))
-            :
-            logout()
+            : logout()
     }
 
-    const logout = () => {
+    function logout() {
         localStorage.removeItem('authToken')
         setLoggedUser(null)
         setIsLoading(false)

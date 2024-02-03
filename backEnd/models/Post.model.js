@@ -7,7 +7,11 @@ const postSchema = new Schema({
     },
     isLiked: {
         type: Boolean
-    }
+    },
+    comments: [{
+        type: Schema.Types.ObjectId,
+        ref: "Post"
+    }]
 },
     {
         timestamps: true
