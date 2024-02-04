@@ -4,7 +4,9 @@ const {
     getById,
     getByUsername,
     addFollow,
-    unfollow
+    unfollow,
+    getFollowersList,
+    getFollowsList
 } = require('./../controllers/user.controllers')
 
 
@@ -15,5 +17,9 @@ router.get('/find/:username', verifyToken, getByUsername)
 router.get('/follow/:followId', verifyToken, addFollow)
 
 router.get('/unfollow/:followId', verifyToken, unfollow)
+
+router.get('/followers', verifyToken, getFollowersList)
+
+router.get('/following', verifyToken, getFollowsList)
 
 module.exports = router

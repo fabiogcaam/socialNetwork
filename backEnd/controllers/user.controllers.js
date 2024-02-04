@@ -59,10 +59,34 @@ function unfollow(req, res, next) {
         .catch(err => next(err))
 }
 
+function getFollowersList() {
+
+    const { payload: loggedUser } = req
+
+    User
+        .findById(loggedUser)
+        .populate("followers")
+        .then(result => res.json(result.followers))
+        .catch(err => next(err))
+}
+
+function getFollowsList() {
+
+    const { payload: loggedUser } = req
+
+    User
+        .findById(loggedUser)
+        .populate("following")
+        .then(result => res.json(result.following))
+        .catch(err => next(err))
+}
+
 
 module.exports = {
     getById,
     getByUsername,
     addFollow,
-    unfollow
+    unfollow,
+    getFollowersList,
+    getFollowsList,
 }
