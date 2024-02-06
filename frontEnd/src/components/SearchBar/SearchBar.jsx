@@ -31,12 +31,29 @@ const SearchBar = ({ userToFind, following, refresh }) => {
             .catch(err => console.log(err))
     }
 
+    function getFollowsList() {
+
+        userServices
+            .getFollowsList()
+            .then(res => setFollowers(res.data))
+            .catch(err => console.log(err))
+    }
+
+    function getList() {
+        userServices
+            .getFollowsList()
+            .then(res => setFollowingList(res.data))
+            .catch(err => console.log(err))
+    }
+
     function handlerUnfollow(event) {
 
-        const followId = e.target.value
+        const followId = event.target.value
 
         userServices
             .unfollow(followId)
+            .then({ getList })
+            .catch(err => console.log(err))
     }
 
     return (
@@ -59,7 +76,7 @@ const SearchBar = ({ userToFind, following, refresh }) => {
                                         followingList.includes(elm) ?
                                             <button className="addButton" value={e._id} onClick={handlerAddFollow}>Follow</button>
                                             :
-                                            <button className="deleteButton" value={e._id} onClick={handleUnfollow}>Unfollow</button>
+                                            <button className="deleteButton" value={e._id} onClick={handlerUnfollow}>Unfollow</button>
                                     }
                                 </Col>
                             </Row>
