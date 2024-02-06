@@ -6,7 +6,8 @@ const {
     addFollow,
     unfollow,
     getFollowersList,
-    getFollowsList
+    getFollowsList,
+    getPostFeed
 } = require('./../controllers/user.controllers')
 
 
@@ -21,5 +22,7 @@ router.get('/unfollow/:followId', verifyToken, unfollow)
 router.get('/followers', verifyToken, getFollowersList)
 
 router.get('/following', verifyToken, getFollowsList)
+
+router.get('/posts', verifyToken, getPostFeed)
 
 module.exports = router

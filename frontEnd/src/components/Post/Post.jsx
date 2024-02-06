@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap"
 
 //TODO: los datos del autor del post y contenido
 
-const Post = () => {
+const Post = ({ text, username, avatar }) => {
 
     const [isLiked, setIsLiked] = useState(false)
 
@@ -16,17 +16,17 @@ const Post = () => {
         <Container>
             <Row>
                 <Col>
-                    <img src="" alt="avatar" />
+                    <img src={avatar} alt={username} />
                 </Col>
                 <Col>
-                    <h2>Usuario</h2>
+                    <h2>{username}</h2>
                 </Col>
                 <Col>
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <p>Texto</p>
+                    <h5>{text}</h5>
                 </Col>
             </Row>
             <Row>

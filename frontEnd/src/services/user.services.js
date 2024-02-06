@@ -33,6 +33,18 @@ class UserServices {
     unfollow(userUsername) {
         return this.api.get(`/unfollow/${userUsername}`)
     }
+
+    getFollowersList() {
+        return this.api.get(`/followers`)
+    }
+
+    getFollowsList() {
+        return this.api.get(`/following`)
+    }
+
+    getPostFeed(userId) {
+        return this.api.get(`/posts`)
+    }
 }
 
 const userServices = new UserServices()

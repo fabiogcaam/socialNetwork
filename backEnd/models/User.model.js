@@ -59,8 +59,8 @@ userSchema.pre('save', function (next) {
 })
 
 userSchema.methods.signToken = function () {
-  const { _id, name, email, avatar } = this
-  const payload = { _id, name, email, avatar }
+  const { _id, username, email, avatar } = this
+  const payload = { _id, username, email, avatar }
 
   const authToken = jwt.sign(
     payload,

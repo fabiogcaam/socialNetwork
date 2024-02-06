@@ -81,6 +81,18 @@ function getFollowsList() {
         .catch(err => next(err))
 }
 
+function getPostFeed() {
+
+    const { followId } = req.params
+
+    User
+        .findById(followId)
+        .populate("posts")
+        .then(result => res.json(result.posts))
+        .catch(err => next(err))
+
+}
+
 
 module.exports = {
     getById,
@@ -89,4 +101,5 @@ module.exports = {
     unfollow,
     getFollowersList,
     getFollowsList,
+    getPostFeed
 }
