@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import { useContext } from "react"
 import { AuthContext } from "../../context/auth.context"
 
+
 //TODO: añadir src de las imagenes
 
 const NavBar = () => {
@@ -31,7 +32,7 @@ const NavBar = () => {
                         <Nav className="me-auto">
 
                             <Link className='navButtons' to={'/main'}><img src="" alt='main' /> Main </Link>
-
+                            <Link className='navButtons mx-4' to={'/search'}><img src="" alt='' />Search</Link>
 
                         </Nav>
                     </Navbar.Collapse>

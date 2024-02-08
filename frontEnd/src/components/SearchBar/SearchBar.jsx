@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react"
 import { Container } from "react-bootstrap"
 import userServices from "../../services/user.services"
+import { Row, Col, Button } from "react-bootstrap"
 
-const SearchBar = ({ userToFind, following, refresh }) => {
+const SearchBar = ({ userToFind, following, handler, closeModal, refresh }) => {
 
     const [followingList, setFollowingList] = useState(following)
     const [foundUsers, setFoundUsers] = useState([])
-
+    const { state, setState } = handler
 
     useEffect(() => { getUser() }, [userToFind])
 
     function getUser() {
 
         userServices
-            .getUserData(userToFind)
+            .getByUsername(userToFind)
             .then(result => setFoundUsers(result.data))
             .catch(err => console.log(err))
     }
@@ -26,6 +27,7 @@ const SearchBar = ({ userToFind, following, refresh }) => {
             .addFollow(followId)
             .then(res => {
                 setFollowingList(...following, res)
+                closeModal()
                 refresh()
             })
             .catch(err => console.log(err))
@@ -35,32 +37,30 @@ const SearchBar = ({ userToFind, following, refresh }) => {
     return (
         <div>
             <Container>
-                <h5>Listado de usuarios</h5>
                 {
                     foundUsers.map(elm => {
-                        return (
-                            <Row md={{ span: 6, offset: 3 }} className="mb-3" key={e.username}>
-                                <Col className="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <img src={elm.avatar} alt="" />
+                        if (!following.filter(elm => elm.username === elm.username).length > 0) {
+                            return (
+                                <Row md={{ span: 6, offset: 3 }} className="my-5" key={elm.username}>
+                                    <Col className="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <img src={elm.avatar} alt="" />
+                                        </div>
                                         <div>
                                             <p>{elm.username}</p>
                                             <p>{elm.email}</p>
                                         </div>
-                                    </div>
-                                    {
-                                        followingList.includes(elm) ?
-                                            <button className="addButton" value={e._id} onClick={handlerAddFollow}>Follow</button>
-                                            :
-                                            <button className="deleteButton" value={e._id} onClick={handlerUnfollow}>Unfollow</button>
-                                    }
-                                </Col>
-                            </Row>
-                        )
+                                        <div>
+                                            <Button className="addButton primary" value={elm._id} onClick={handlerAddFollow}>Follow</Button>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            )
+                        }
                     })
                 }
             </Container>
-        </div>
+        </div >
     )
 
 }

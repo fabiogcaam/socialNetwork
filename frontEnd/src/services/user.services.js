@@ -4,7 +4,7 @@ class UserServices {
 
     constructor() {
         this.api = axios.create({
-            baseUrl: `${import.meta.env.VITE_APP_API_URL}/user`
+            baseURL: `${import.meta.env.VITE_APP_API_URL}/user`
         })
 
         this.api.interceptors.request.use((config) => {
@@ -16,34 +16,35 @@ class UserServices {
 
             return config
         })
+
     }
 
     getById(userId) {
-        return this.api.get(`find/${userId}`)
+        return this.api.get(`/find/${userId}`)
     }
 
     getByUsername(userUsername) {
-        return this.api.get(`find/${userUsername}`)
+        return this.api.get(`/find/${userUsername}`)
     }
 
-    addFollow(userUsername) {
-        return this.api.get(`/follow/${userUsername}`)
+    addFollow(userId) {
+        return this.api.get(`/follow/${userId}`)
     }
 
-    unfollow(userUsername) {
-        return this.api.get(`/unfollow/${userUsername}`)
+    unfollow(userId) {
+        return this.api.get(`/unfollow/${userId}`)
     }
 
     getFollowersList() {
-        return this.api.get(`/followers`)
+        return this.api.get('/followers')
     }
 
     getFollowsList() {
-        return this.api.get(`/following`)
+        return this.api.get('/following')
     }
 
-    getPostFeed(userId) {
-        return this.api.get(`/posts`)
+    getAllPostsFromFollows(followId) {
+        return this.api.get(`/posts/${followId}`)
     }
 }
 

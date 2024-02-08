@@ -36,6 +36,10 @@ const userSchema = new Schema(
         ref: 'User'
       }
     ],
+    isPublic: {
+      type: Boolean,
+      default: true
+    },
     posts: [
       {
         type: Schema.Types.ObjectId,

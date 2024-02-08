@@ -1,6 +1,8 @@
 import { useEffect } from "react"
 import User from "../../../../backEnd/models/User.model"
 import { post } from "../../../../backEnd/routes/auth.routes"
+import Post from "../../../../backEnd/models/Post.model"
+import userServices from "../../services/user.services"
 
 const PostFeed = () => {
 
@@ -14,7 +16,7 @@ const PostFeed = () => {
 
     function getPostFromFollows() {
 
-        User
+        userServices
             .getFollowsList()
             .then((res) => {
                 setFollows(...follows, res)
@@ -22,7 +24,7 @@ const PostFeed = () => {
             .catch(err => console.log(err))
 
         follows.map(elm => {
-            User
+            userServices
                 .getPostsFeed(elm._id)
                 .then((res) => {
                     setPosts(...post, res)
@@ -40,7 +42,7 @@ const PostFeed = () => {
                     return (
                         elm.posts.map(elmPost => {
                             return (
-                                <Post text={elmPost.text} username={elm.username} avatar={elm.avatar} />
+                                <Post id={elmPost._id} username={elm.username} avatar={elm.avatar} />
                             )
                         })
                     )

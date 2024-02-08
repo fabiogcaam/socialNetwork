@@ -1,14 +1,43 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Container, Row, Col } from "react-bootstrap"
+import postServices from "../../services/post.services"
+import userServices from "../../services/user.services"
+import { AuthContext } from "../../context/auth.context"
 
 //TODO: los datos del autor del post y contenido
 
-const Post = ({ text, username, avatar }) => {
+const Post = ({ text, idUser, likes }) => {
 
+    const [user, setUser] = useState({})
     const [isLiked, setIsLiked] = useState(false)
 
+    const { loggedUser } = useContext(AuthContext)
+
     const handleLike = () => {
-        setIsLiked(!isLiked)
+        if (likes.includes(loggedUser._id)) {
+            setIsLiked(false)
+        } else {
+            setIsLiked(true)
+        }
+    }
+
+
+
+    useEffect(() => { getUser() }, [])
+
+    function getPost() {
+        postServices
+            .getPost(id)
+            .then(res => setPost(res))
+            .catch(err => console.log(err))
+    }
+
+    function getUser() {
+
+        userServices
+            .getById(idUser)
+            .then(res => setUser(res))
+            .catch(err => console.log(err))
     }
 
 
@@ -16,10 +45,10 @@ const Post = ({ text, username, avatar }) => {
         <Container>
             <Row>
                 <Col>
-                    <img src={avatar} alt={username} />
+                    <img src={user.avatar} alt={username} />
                 </Col>
                 <Col>
-                    <h2>{username}</h2>
+                    <h2>{user.username}</h2>
                 </Col>
                 <Col>
                 </Col>

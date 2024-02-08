@@ -1,11 +1,13 @@
-const FollowCard = ({ following }) => {
+const FollowCard = ({ follow }) => {
 
     return (
-        <div className="FollowCard">
-            <img src={following.avatar} alt='' />
+        <div className="FollowCard d-flex">
+            <div>
+                <img src={follow.avatar} alt='' />
+            </div>
             <div className="info">
-                <h5>{following.username}</h5>
-                <p>{following.email}</p>
+                <h5>{follow.username}</h5>
+                <p>{follow.email}</p>
             </div>
         </div>
     )

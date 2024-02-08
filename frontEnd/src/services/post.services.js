@@ -21,6 +21,18 @@ class PostServices {
     addPost(text) {
         return this.api.post('/post/add', text)
     }
+
+    getPost(id) {
+        return this.api.get(`/find/${id}`)
+    }
+
+    likePost(postId) {
+        return this.api.get(`/likePost/${postId}`)
+    }
+
+    deleteLike(postId) {
+        return this.api.get(`/deleteLike/${postId}`)
+    }
 }
 
 const postServices = new PostServices()

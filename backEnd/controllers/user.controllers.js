@@ -1,3 +1,4 @@
+const Post = require("../models/Post.model")
 const User = require("./../models/User.model")
 
 function getById(req, res, next) {
@@ -59,18 +60,22 @@ function unfollow(req, res, next) {
         .catch(err => next(err))
 }
 
-function getFollowersList() {
+function getFollowersList(req, res, next) {
 
     const { payload: loggedUser } = req
+
+    console.log("ENTRO POR LO MENOS AQUI -- ", loggedUser)
 
     User
         .findById(loggedUser)
         .populate("followers")
-        .then(result => res.json(result.followers))
+        .then(result => {
+            res.json(result.followers)
+        })
         .catch(err => next(err))
 }
 
-function getFollowsList() {
+function getFollowsList(req, res, next) {
 
     const { payload: loggedUser } = req
 
@@ -81,14 +86,18 @@ function getFollowsList() {
         .catch(err => next(err))
 }
 
-function getPostFeed() {
+function getAllPostsFromFollows(req, res, next) {
 
     const { followId } = req.params
 
-    User
-        .findById(followId)
-        .populate("posts")
-        .then(result => res.json(result.posts))
+    const promises = [
+        User.findById(followId).populate("following"),
+        Post.find({ user: { $in: this.following } }).populate('user')
+    ]
+
+    Promise
+        .all(promises)
+        .then(posts => res.status(200).json(posts))
         .catch(err => next(err))
 
 }
@@ -101,5 +110,5 @@ module.exports = {
     unfollow,
     getFollowersList,
     getFollowsList,
-    getPostFeed
+    getAllPostsFromFollows
 }

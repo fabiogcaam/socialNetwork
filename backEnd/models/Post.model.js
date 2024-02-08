@@ -5,8 +5,13 @@ const postSchema = new Schema({
         type: String,
         required: [true, "Text is required"]
     },
-    isLiked: {
-        type: Boolean
+    likes: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     },
     comments: [{
         type: Schema.Types.ObjectId,

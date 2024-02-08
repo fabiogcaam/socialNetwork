@@ -35,8 +35,6 @@ function login(req, res, next) {
                 const { _id, email, avatar, username } = foundUser
                 const payload = { _id, email, avatar, username }
 
-                console.log("ESTOOOOOOYYYY AQUIIIIII---> ", foundUser)
-
                 const authToken = foundUser.signToken()
 
                 res.status(200).json({ authToken })
