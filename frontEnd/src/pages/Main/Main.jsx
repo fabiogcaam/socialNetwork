@@ -39,7 +39,7 @@ const Main = () => {
                         )
                     })
                     :
-                    <h1>No hay posts de tus follows</h1>
+                    <h1>Loading...</h1>
             }
         </>
     )
