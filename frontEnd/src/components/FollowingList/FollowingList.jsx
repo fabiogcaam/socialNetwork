@@ -32,7 +32,6 @@ const FollowingList = () => {
         userServices
             .getFollowsList()
             .then(res => {
-                console.log("ESTAMOS DE BUSQUEDA -- ", res)
                 setFollowing(res.data)
             })
             .catch(err => console.log(err))

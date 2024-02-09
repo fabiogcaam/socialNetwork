@@ -22,26 +22,6 @@ const Post = ({ _id, text, idUser, username, likes, comments }) => {
         }
     }
 
-
-
-    useEffect(() => { getUser() }, [])
-
-    function getPost() {
-        postServices
-            .getPost(id)
-            .then(res => setPost(res))
-            .catch(err => console.log(err))
-    }
-
-    function getUser() {
-
-        userServices
-            .getById(idUser)
-            .then(res => setUser(res))
-            .catch(err => console.log(err))
-    }
-
-
     return (
         <Container>
             <Row>

@@ -25,12 +25,9 @@ const CreatePost = () => {
 
         event.preventDefault()
 
-        console.log(post)
-
         postServices
             .addPost(post)
             .then((res) => {
-                console.log(res.data)
                 handleClose()
             })
             .catch(err => console.log(err))

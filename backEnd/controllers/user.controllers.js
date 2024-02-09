@@ -64,8 +64,6 @@ function getFollowersList(req, res, next) {
 
     const { payload: loggedUser } = req
 
-    console.log("ENTRO POR LO MENOS AQUI -- ", loggedUser)
-
     User
         .findById(loggedUser)
         .populate("followers")
@@ -94,12 +92,12 @@ function getAllPostsFromFollows(req, res, next) {
         .findById(userId)
         .select("following")
         .then((follows) => {
-            Post
+            return Post
                 .find({ user: { $in: follows.following } })
                 .populate("user")
-                .then((posts) => {
-                    res.json(posts)
-                })
+        })
+        .then((posts) => {
+            res.json(posts)
         })
         .catch(err => next(err))
 

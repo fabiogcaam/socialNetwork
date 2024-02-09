@@ -14,15 +14,12 @@ const Main = () => {
     function getAllPosts() {
 
         setLoading(true)
-        console.log("entraaaa")
 
         userServices
             .getAllPostsFromFollows()
             .then(({ data }) => {
-                console.log("ESTAMOOOS AQUI EN MAIN", data)
                 setAllPosts(...allPosts, data)
                 setLoading(false)
-                console.log(allPosts)
             })
             .catch(err => console.log(err))
 
