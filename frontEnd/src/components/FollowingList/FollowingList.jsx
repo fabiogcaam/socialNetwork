@@ -70,7 +70,7 @@ const FollowingList = () => {
                                     <FollowCard follow={elm} key={i} />
                                 </Col>
                                 <Col>
-                                    <Button className="unfollow mt-3" variant="danger" value={elm._id} onClick={handlerUnfollow}>Unfollow</Button>
+                                    <Button className="unfollow mt-3" variant="secondary" value={elm._id} onClick={handlerUnfollow}>Unfollow</Button>
                                 </Col>
                             </Row>
                         </div>

@@ -7,12 +7,12 @@ module.exports = app => {
     app.use("/api/auth", authRoutes)
 
     const uploadRoutes = require("./upload.routes")
-    app.use("api/upload", uploadRoutes)
+    app.use("/api/upload", uploadRoutes)
 
     const userRoutes = require("./user.routes")
     app.use("/api/user", userRoutes)
 
     const postRoutes = require("./post.routes")
-    app.use("api/post", postRoutes)
+    app.use("/api/post", postRoutes)
 
 }

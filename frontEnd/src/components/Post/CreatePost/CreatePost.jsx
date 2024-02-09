@@ -1,11 +1,15 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Button, Modal, Form } from "react-bootstrap"
 import postServices from "../../../services/post.services"
+import { AuthContext } from "./../../../context/auth.context"
 
 const CreatePost = () => {
 
+    const { authUser } = useContext(AuthContext)
+    const userId = authUser._id
+
     const [show, setShow] = useState(false)
-    const [post, setPost] = useState('')
+    const [post, setPost] = useState({ text: '', user: userId })
 
 
     function handleShow() {
@@ -13,15 +17,20 @@ const CreatePost = () => {
     }
 
     function handleClose() {
-        setPost('')
+        setPost({ text: '' })
         setShow(false)
     }
 
-    function addPost() {
+    function handleraddPost(event) {
+
+        event.preventDefault()
+
+        console.log(post)
 
         postServices
             .addPost(post)
-            .then(() => {
+            .then((res) => {
+                console.log(res.data)
                 handleClose()
             })
             .catch(err => console.log(err))
@@ -29,9 +38,10 @@ const CreatePost = () => {
     }
 
     function handleInputOnChange(event) {
-        const { value, post } = event.target
-        addExpenseInfo({ ...post, [post]: value })
+        const { value } = event.target
+        setPost({ ...post, text: value })
     }
+
 
     return (
         <>
@@ -40,9 +50,10 @@ const CreatePost = () => {
             </Button>
 
 
+
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>New Post</Modal.Title>
+                    <Modal.Title>Modal heading</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -50,8 +61,8 @@ const CreatePost = () => {
                             className="mb-3"
                             controlId="exampleForm.ControlTextarea1"
                         >
-                            <Form.Label>Post Text</Form.Label>
-                            <Form.Control as="textarea" onChange={handleInputOnChange} rows={3} />
+                            <Form.Label>Example textarea</Form.Label>
+                            <Form.Control as="textarea" rows={3} value={post.text} onChange={handleInputOnChange} />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -59,7 +70,7 @@ const CreatePost = () => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={addPost}>
+                    <Button variant="primary" onClick={handleraddPost}>
                         Add Post
                     </Button>
                 </Modal.Footer>

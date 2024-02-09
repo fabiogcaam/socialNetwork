@@ -2,12 +2,14 @@ const Post = require('../models/Post.model')
 
 function addPost(req, res, next) {
 
-    const { id } = req.params
+    const { _id: user } = req.payload
     const { text } = req.body
 
+    console.log("ENTRAMOS AQUIIIIII")
+
     Post
-        .create({ text })
-        .then(() => res.status(201))
+        .create({ text, user })
+        .then(() => res.sendStatus(201).json("post created succesfully"))
         .catch(err => next(err))
 }
 

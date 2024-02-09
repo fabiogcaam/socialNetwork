@@ -5,11 +5,11 @@ const postSchema = new Schema({
         type: String,
         required: [true, "Text is required"]
     },
-    likes: {
+    user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    user: {
+    likes: {
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
