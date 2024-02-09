@@ -45,15 +45,19 @@ const CreatePost = () => {
 
     return (
         <>
-            <Button onClick={handleShow}>
-                Add Post
-            </Button>
+            <div className="d-flex justify-content-center my-5">
+                <Button onClick={handleShow}>
+                    Add Post
+                </Button>
+            </div>
+
+            <hr />
 
 
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>New Post</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -61,7 +65,7 @@ const CreatePost = () => {
                             className="mb-3"
                             controlId="exampleForm.ControlTextarea1"
                         >
-                            <Form.Label>Example textarea</Form.Label>
+                            <Form.Label>What are you thinking?</Form.Label>
                             <Form.Control as="textarea" rows={3} value={post.text} onChange={handleInputOnChange} />
                         </Form.Group>
                     </Form>

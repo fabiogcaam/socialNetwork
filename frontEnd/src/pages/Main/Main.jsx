@@ -6,15 +6,24 @@ import postServices from "../../services/post.services"
 
 const Main = () => {
 
-    const [posts, setPosts] = useState([])
+    const [allPosts, setAllPosts] = useState([])
+    const [loading, setLoading] = useState(false)
 
-    useEffect(() => { getAllPosts }, [])
+    useEffect(() => { getAllPosts() }, [])
 
     function getAllPosts() {
 
+        setLoading(true)
+        console.log("entraaaa")
+
         userServices
             .getAllPostsFromFollows()
-            .then(res => { setPosts(...posts, res) })
+            .then(({ data }) => {
+                console.log("ESTAMOOOS AQUI EN MAIN", data)
+                setAllPosts(...allPosts, data)
+                setLoading(false)
+                console.log(allPosts)
+            })
             .catch(err => console.log(err))
 
     }
@@ -23,11 +32,14 @@ const Main = () => {
         <>
             <CreatePost />
             {
-                posts.map(elm => {
-                    return (
-                        <Post text={elm.text} idUser={elm.user} likes={elm.likes} />
-                    )
-                })
+                !loading ?
+                    allPosts.map(elm => {
+                        return (
+                            <Post _id={elm._id} text={elm.text} idUser={elm.user._id} avatar={elm.user.avatar} username={elm.user.username} likes={elm.likes} />
+                        )
+                    })
+                    :
+                    <h1>No hay posts de tus follows</h1>
             }
         </>
     )

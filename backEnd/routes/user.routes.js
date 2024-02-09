@@ -23,6 +23,6 @@ router.get('/followers', verifyToken, getFollowersList)
 
 router.get('/following', verifyToken, getFollowsList)
 
-router.get('/posts', verifyToken, getAllPostsFromFollows)
+router.get('/posts/:userId', verifyToken, getAllPostsFromFollows)
 
 module.exports = router

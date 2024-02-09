@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import User from "../../../../backEnd/models/User.model"
 import { post } from "../../../../backEnd/routes/auth.routes"
-import Post from "../../../../backEnd/models/Post.model"
+import Post from "./../Post/Post"
 import userServices from "../../services/user.services"
 
 const PostFeed = () => {

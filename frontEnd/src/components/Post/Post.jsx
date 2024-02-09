@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { Container, Row, Col } from "react-bootstrap"
 import postServices from "../../services/post.services"
 import userServices from "../../services/user.services"
@@ -6,15 +6,16 @@ import { AuthContext } from "../../context/auth.context"
 
 //TODO: los datos del autor del post y contenido
 
-const Post = ({ text, idUser, likes }) => {
+const Post = ({ _id, text, idUser, username, likes, comments }) => {
 
     const [user, setUser] = useState({})
     const [isLiked, setIsLiked] = useState(false)
 
-    const { loggedUser } = useContext(AuthContext)
+    const { authUser } = useContext(AuthContext)
 
     const handleLike = () => {
-        if (likes.includes(loggedUser._id)) {
+        if (likes.includes(authUser._id)) {
+            postServices.deleteLike(_id)
             setIsLiked(false)
         } else {
             setIsLiked(true)

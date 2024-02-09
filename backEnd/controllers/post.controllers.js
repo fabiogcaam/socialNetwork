@@ -1,16 +1,19 @@
 const Post = require('../models/Post.model')
+const User = require('../models/User.model')
 
 function addPost(req, res, next) {
 
     const { _id: user } = req.payload
     const { text } = req.body
 
-    console.log("ENTRAMOS AQUIIIIII")
 
-    Post
-        .create({ text, user })
+    Post.create({ text, user })
+        .then((post) => {
+            return User.findByIdAndUpdate(user, { $push: { posts: post._id } })
+        })
         .then(() => res.sendStatus(201).json("post created succesfully"))
         .catch(err => next(err))
+
 }
 
 function getPost(req, res, next) {
@@ -26,7 +29,7 @@ function getPost(req, res, next) {
 function likePost(req, res, next) {
 
     const { payload: loggedUser } = req
-    const { postId } = req.params
+    const { postId } = req.body
 
     Post
         .findByIdAndUpdate(postId, { $push: { likes: loggedUser._id } })
@@ -37,7 +40,7 @@ function likePost(req, res, next) {
 function deleteLike(req, res, next) {
 
     const { payload: loggedUser } = req
-    const { postId } = req.params
+    const { postId } = req.body
 
     Post
         .findByIdAndUpdate(postId, { $pull: { likes: loggedUser._id } })

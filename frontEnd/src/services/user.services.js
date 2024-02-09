@@ -43,8 +43,8 @@ class UserServices {
         return this.api.get('/following')
     }
 
-    getAllPostsFromFollows(followId) {
-        return this.api.get(`/posts/${followId}`)
+    getAllPostsFromFollows(userId) {
+        return this.api.get(`/posts/${userId}`)
     }
 }
 
