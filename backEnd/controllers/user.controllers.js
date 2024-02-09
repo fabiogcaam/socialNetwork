@@ -94,33 +94,14 @@ function getAllPostsFromFollows(req, res, next) {
         .findById(userId)
         .select("following")
         .then((follows) => {
-            console.log("EN PRINCIPIO TENGO QUE APARECER", follows)
             Post
                 .find({ user: { $in: follows.following } })
                 .populate("user")
                 .then((posts) => {
-                    console.log("MENUDOOO SITIO ESTOY ", posts)
                     res.json(posts)
                 })
         })
-        // .then((posts) => {
-        //     console.log("ESTAMOOOOS AQUIIIII", posts)
-        //     res.sendStatus(200).json(posts)
-        // })
         .catch(err => next(err))
-
-    // const promises = [
-    //     User.findById(userId).select("following"),
-    //     Post.find({ user: { $in: this.following } }).populate('user')
-    // ]
-
-    // Promise
-    //     .all(promises)
-    //     .then(posts => {
-    //         console.log("ESTAMOS DE FIESTA CON LOS POSTS", posts)
-    //         res.status(200).json(posts)
-    //     })
-    //     .catch(err => next(err))
 
 }
 
