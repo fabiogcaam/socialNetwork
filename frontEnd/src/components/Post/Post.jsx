@@ -1,10 +1,11 @@
 import { useEffect, useState, useContext } from "react"
-import { Container, Row, Col, Modal, Form } from "react-bootstrap"
+import { Container, Row, Col, Modal, Form, Button } from "react-bootstrap"
 import postServices from "../../services/post.services"
 import { AuthContext } from "../../context/auth.context"
 import corazonLLeno from "../../assets/corazonLLeno.webp"
 import corazonVacio from "../../assets/corazonVacio.png"
 import comentar from "../../assets/comentar.png"
+import commentServices from "../../services/comment.services"
 
 //TODO: los datos del autor del post y contenido
 
@@ -15,7 +16,7 @@ const Post = ({ _id, text, username, avatar, likes }) => {
     const { loggedUser } = useContext(AuthContext)
 
     const [show, setShow] = useState(false)
-    const [comment, setComment] = useState({ text: '', user: loggedUser._id, post: '' })
+    const [comment, setComment] = useState({ text: '', post: _id })
 
     useEffect(() => {
         checkIfILiked()
@@ -43,7 +44,13 @@ const Post = ({ _id, text, username, avatar, likes }) => {
         setShow(false)
     }
 
-    function handleraddPost(event) {
+    function handleInputOnChange(event) {
+        const { value } = event.target
+        setComment({ ...comment, text: value, post: _id })
+        console.log("A ver si cambia el valor del comentario", comment.text)
+    }
+
+    function handleraddComment(event) {
 
         event.preventDefault()
 
@@ -51,15 +58,11 @@ const Post = ({ _id, text, username, avatar, likes }) => {
             .addComment(comment)
             .then(() => {
                 handleClose()
+                console.log(_id)
             })
             .catch(err => console.log(err))
-
     }
 
-    function handleInputOnChange(event) {
-        const { value } = event.target
-        setComment({ ...comment, text: value })
-    }
 
     function handleLike() {
         if (Array.isArray(likesList)) {
@@ -133,7 +136,7 @@ const Post = ({ _id, text, username, avatar, likes }) => {
                             controlId="exampleForm.ControlTextarea1"
                         >
                             <Form.Label>What do you think about this post?</Form.Label>
-                            <Form.Control as="textarea" rows={3} value={post.text} onChange={handleInputOnChange} />
+                            <Form.Control as="textarea" rows={3} value={comment.text} onChange={handleInputOnChange} />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -141,7 +144,7 @@ const Post = ({ _id, text, username, avatar, likes }) => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleraddPost}>
+                    <Button variant="primary" onClick={handleraddComment}>
                         Add Comment
                     </Button>
                 </Modal.Footer>

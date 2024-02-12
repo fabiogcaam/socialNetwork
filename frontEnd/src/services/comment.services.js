@@ -5,7 +5,6 @@ class CommentServices {
     constructor() {
         this.api = axios.create({
             baseURL: `${import.meta.env.VITE_APP_API_URL}/comment`
-
         })
 
         this.api.interceptors.request.use((config) => {
@@ -23,3 +22,6 @@ class CommentServices {
         return this.api.post('/add', id, userId, postId)
     }
 }
+
+const commentServices = new CommentServices()
+export default commentServices
