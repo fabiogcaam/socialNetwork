@@ -27,7 +27,7 @@ const CreatePost = () => {
 
         postServices
             .addPost(post)
-            .then((res) => {
+            .then(() => {
                 handleClose()
             })
             .catch(err => console.log(err))

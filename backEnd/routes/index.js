@@ -15,4 +15,7 @@ module.exports = app => {
     const postRoutes = require("./post.routes")
     app.use("/api/post", postRoutes)
 
+    const commentsRoutes = require("./comment.routes")
+    app.use("/api/comment", commentsRoutes)
+
 }

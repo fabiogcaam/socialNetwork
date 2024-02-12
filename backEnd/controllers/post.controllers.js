@@ -29,29 +29,44 @@ function getPost(req, res, next) {
 function likePost(req, res, next) {
 
     const { payload: loggedUser } = req
-    const { postId } = req.body
+    const { postId } = req.params
 
     Post
         .findByIdAndUpdate(postId, { $push: { likes: loggedUser._id } })
-        .then(() => res.sendStatus(200))
+        .then((post) => {
+            console.log("ESTAMOOOS AÑADIENDO UN LIKEE ->", post)
+            res.sendStatus(200)
+        })
         .catch(err => next(err))
 }
 
 function deleteLike(req, res, next) {
 
     const { payload: loggedUser } = req
-    const { postId } = req.body
+    const { postId } = req.params
 
     Post
         .findByIdAndUpdate(postId, { $pull: { likes: loggedUser._id } })
-        .then(() => res.sendStatus(200))
+        .then(() => { res.sendStatus(200) })
         .catch(err => next(err))
 
+}
+
+function getLikes(req, res, next) {
+
+    const { id } = req.params
+
+    Post
+        .find({ id })
+        .select("likes")
+        .then(result => res.json(result))
+        .catch(err => next(err))
 }
 
 module.exports = {
     addPost,
     getPost,
     likePost,
-    deleteLike
+    deleteLike,
+    getLikes
 }

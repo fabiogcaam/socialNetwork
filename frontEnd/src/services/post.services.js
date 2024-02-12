@@ -27,11 +27,15 @@ class PostServices {
     }
 
     likePost(postId) {
-        return this.api.get(`/likePost/${postId}`)
+        return this.api.get(`/addLike/${postId}`)
     }
 
     deleteLike(postId) {
         return this.api.get(`/deleteLike/${postId}`)
+    }
+
+    getLikes(postId) {
+        return this.api.get(`/postLikes/${postId}`)
     }
 
 }

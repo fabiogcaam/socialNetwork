@@ -9,13 +9,19 @@ const SearchBar = ({ userToFind, following, handler, closeModal, refresh }) => {
     const [foundUsers, setFoundUsers] = useState([])
     const { state, setState } = handler
 
-    useEffect(() => { getUser() }, [userToFind])
+    useEffect(() => {
+        getUser()
+        console.log(following)
+    }, [userToFind])
 
     function getUser() {
 
         userServices
             .getByUsername(userToFind)
-            .then(result => setFoundUsers(result.data))
+            .then(result => {
+                console.log("ESTAMOOOOS AQUIII--", result.data)
+                setFoundUsers(result.data)
+            })
             .catch(err => console.log(err))
     }
 
@@ -39,7 +45,7 @@ const SearchBar = ({ userToFind, following, handler, closeModal, refresh }) => {
             <Container>
                 {
                     foundUsers.map(elm => {
-                        if (!following.filter(elm => elm.username === elm.username).length > 0) {
+                        if (!following.filter(e => e.username === elm.username).length > 0) {
                             return (
                                 <Row md={{ span: 6, offset: 3 }} className="my-5" key={elm.username}>
                                     <Col className="d-flex justify-content-between align-items-center">
